@@ -92,5 +92,9 @@ func_writeok "The AzResourceGroup variable was assigned a value: $AzResourceGrou
 }
 
 # Create the VM with the needed variables.
-New-AzVm -ResourceGroupName $AzResourceGroup -Name $AzVMName -Credential (Get-Credential) -Location $AzResourceGroupLocation -Image UbuntuLTS | Out-File $logfile -append
-func_writeok "The AzVM has been created in the resource group $AzResourceGroup with the name $AzVMName in the location $AzResourceGroupLocation
+try {
+    New-AzVm -ResourceGroupName $AzResourceGroup -Name $AzVMName -Credential (Get-Credential) -Location $AzResourceGroupLocation -Image UbuntuLTS | Out-File $logfile -append
+    func_writeok "The AzVM has been created in the resource group $AzResourceGroup with the name $AzVMName in the location $AzResourceGroupLocation"
+} catch {
+    throw func_writenok "The AzVM was not able to be created. Please check the necessary logs for further analysis" 
+}
