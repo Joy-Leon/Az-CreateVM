@@ -45,10 +45,12 @@ function func_logging {
 }
 function func_writeok {
     param ($string)
+    write-host ""
     write-host $string -f green
 }
 function func_writenok {
     param ($string)
+    write-host ""
     write-host $string -f red
 }
 
@@ -85,8 +87,7 @@ func_writeok "The subscription has been set to $Subscription"
 if ($AzResourceGroup -eq $null) {
 New-AzResourceGroup -Name $AzResourceGroupName -Location $AzResourceGroupLocation | Out-File $logfile -append
 func_writeok "A new AzResourceGroup has been created with the name $AzResourceGroupName in the location $AzResourceGroupLocation"
-}
-Else {
+} Else {
 func_writeok "The AzResourceGroup variable was assigned a value: $AzResourceGroup"
 }
 
